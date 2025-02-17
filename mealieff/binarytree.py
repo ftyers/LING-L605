@@ -37,9 +37,9 @@ class Node:
     def delete_node(self, value):
         # If the node is smaller or larger than the root, 
         if value < self.value:
-            self.left = self.left.delete_node(self.left, value) 
+            self.left = self.left.delete_node(value) 
         elif value > self.value:
-            self.right = self.right.delete_node(self.right, value)
+            self.right = self.right.delete_node(value)
         # more complicated, need to find the node, then delete it, then rearrange?? 
         else:
             # the node has no children it can be deleted
@@ -56,10 +56,10 @@ class Node:
                 else:
                     # both children are there, and their children??
                     # find the next lower node on the tree to the right of 'value'
-                    get_min = self.right.inorder()
-                    self.value = inorder_list[0] # Hmmm but leftmost elemet isn't naturally on the rightside of the root..
+                    get_min = self.right.inorder()[0]
+                    self.value = get_min.value
                     self.right = self.right.delete_node(self.value)
-                    
+        return self
 
     def __str__(self):
         return '['+str(self.value)+']'
@@ -91,7 +91,7 @@ class BinarySearchTree:
 
     def delete_node(self, value):
         if self.root:
-            self.root = self.delete_node(value)        
+            self.root = self.root.delete_node(value)        
 
 b = BinarySearchTree()
 for value in [16, 1, 25, 7, 49, 64, 4, 9, 81, 52]:
@@ -102,4 +102,4 @@ print("before deleting..", b.inorder())
 
 b.delete_node(49)
 
-print("before deleting..", b.inorder())
+print("after deleting..", b.inorder())
