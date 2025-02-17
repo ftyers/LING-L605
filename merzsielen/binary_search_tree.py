@@ -31,28 +31,15 @@ class BinarySearchTree:
         self.root = None
 
     def insert(self, value):
-        if self.root: # If we have already defined the root
-                # call the insert function of the root node
+        if self.root:
             self.root.insert(value)
-        else:    # define the root
+        else:
             self.root = Node(value)
 
     def inorder(self):
         if self.root:
             self.root.inorder()
-
-    # def find(self, value):
-    #     node = self.root
-    #     while(True):
-    #         if (node.value == value): return node
-    #         if (value < node.value and node.left):
-    #             node = node.left
-    #             continue
-    #         if (value > node.value and node.right):
-    #             node = node.right
-    #             continue
-    #         return None
-            
+  
     def find(self, node, value):
         if (node.value == value): return node
         if (value < node.value and node.left):
@@ -62,6 +49,9 @@ class BinarySearchTree:
         return None
     
     def delete(self, node, parent, value):
+        #######################################################
+        # Traversing the Tree                                 #
+        #######################################################
         if (value < node.value and node.left != None):
             self.delete(node.left, node, value)
             return
@@ -71,14 +61,22 @@ class BinarySearchTree:
         if (node.value != value):
             return
 
-        # If the node has no children, just prune it entirely.
+        #######################################################
+        # Leaf Deletion                                       #
+        #######################################################
+        # We figure out whether this leaf is the left or
+        # right branch of its parents and then clip it off.
         if (node.left == None and node.right == None):
             if (parent.left == node): parent.left = None
             else: parent.right = None
             return
         
-        # If the node has only one child, just replace the
-        # corresponding parent branch with that.
+        #######################################################
+        # One-Child Node Deletion                             #
+        #######################################################
+        # We first figure out which of the branches is
+        # empty and then promote the non-empty branch into
+        # the position of the deleted node.
         if (node.left == None):
             if (parent.left == node): parent.left = node.right
             else: parent.right = node.right
@@ -88,18 +86,26 @@ class BinarySearchTree:
             else: parent.right = node.left
             return
         
-        # If the node has more than one child, we find the
-        # next node in-order, replace the current node with
-        # that one, and then delete.
+        #######################################################
+        # Two-Child Node Deletion                             #
+        #######################################################
+        # First, we find the leftmost node of the right
+        # branch.
         target = node.right
         while (target != None and target.left != None):
             target = target.left
-        node.value = value
-        self.delete(node.right, node, value)
+
+        # Then, we swap the original node's value for that
+        # of the target.
+        node.value = target.value
+
+        # Finally, we recurse further down the tree and
+        # delete the new target.
+        self.delete(node.right, node, target.value)
         return
 
 b = BinarySearchTree()
-for value in [16, 7, 49, 4, 25, 64, 1, 9, 10, 81, 52]:
+for value in [26, 93, 56, 63, 32, 25, 47, 34, 17, 8]:
     print('Inserting:',value)
     b.insert(value)
 
