@@ -34,30 +34,27 @@ class Node:
             if self.right:
                 return self.right.find(needle)
 
+    def get_min(self):
+        if self.left is None:
+            return self
+        return self.left.get_min()
+
     def delete_node(self, value):
-        # If the node is smaller or larger than the root, 
         if value < self.value:
             self.left = self.left.delete_node(value) 
         elif value > self.value:
             self.right = self.right.delete_node(value)
-        # more complicated, need to find the node, then delete it, then rearrange?? 
         else:
-            # the node has no children it can be deleted
             if self.left is None and self.right is None:
                 return None
-             # then go left and right 
             else:
-                 # if the only child is on the right it can be promoted
                 if self.left is None:
                     return self.right
-                # ooh, actually left can be promoted too if it's the only child
                 elif self.right is None:
                     return self.left
                 else:
-                    # both children are there, and their children??
-                    # find the next lower node on the tree to the right of 'value'
-                    get_min = self.right.inorder()[0]
-                    self.value = get_min.value
+                    min_node = self.right.get_min()
+                    self.value = min_node.value
                     self.right = self.right.delete_node(self.value)
         return self
 
@@ -93,6 +90,47 @@ class BinarySearchTree:
         if self.root:
             self.root = self.root.delete_node(value)        
 
+    def pretty(self):
+        root = self.root
+        def height(root):
+            return 1 + max(height(root.left), height(root.right)) if root else -1  
+        nlevels = height(root)
+        width =  pow(2,nlevels+1)
+    
+        q=[(root,0,width,'c')]
+        levels=[]
+    
+        while q:
+            node, level, x, align = q.pop(0)
+            if node:            
+                if len(levels) <= level:
+                    levels.append([])
+            
+                levels[level].append([node,level,x,align])
+                seg= width // (pow(2, level+1))
+                q.append((node.left, level+1, x - seg, 'l'))
+                q.append((node.right, level+1, x + seg, 'r'))
+    
+        for i, l in enumerate(levels):
+            pre = 0
+            preline = 0
+            linestr = ''
+            pstr = ''
+            seg = width // (pow(2, i+1))
+            for n in l:
+                valstr = str(n[0].value)
+                if n[3] == 'r':
+                    linestr += ' ' * (n[2] - preline - 1 - seg - seg // 2) + '¯' * (seg + seg // 2) + '\\'
+                    preline = n[2] 
+                if n[3] == 'l':
+                   linestr += ' ' * (n[2] - preline - 1) + '/' + '¯' * (seg + seg // 2)  
+                   preline = n[2] + seg + seg // 2
+                pstr += ' ' * (n[2] - pre - len(valstr)) + valstr #correct the potition acording to the number size
+                pre = n[2]
+            print(linestr)
+            print(pstr)   
+
+
 b = BinarySearchTree()
 for value in [16, 1, 25, 7, 49, 64, 4, 9, 81, 52]:
     b.insert(value)
@@ -101,5 +139,14 @@ for value in [16, 1, 25, 7, 49, 64, 4, 9, 81, 52]:
 print("before deleting..", b.inorder())
 
 b.delete_node(49)
+
+print("after deleting..", b.inorder())
+
+
+b.delete_node(7)
+
+print("after deleting..", b.inorder())
+
+b.delete_node(81)
 
 print("after deleting..", b.inorder())
