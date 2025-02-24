@@ -136,17 +136,3 @@ for value in [16, 1, 25, 7, 49, 64, 4, 9, 81, 52]:
     b.insert(value)
 
 
-print("before deleting..", b.inorder())
-
-b.delete_node(49)
-
-print("after deleting..", b.inorder())
-
-
-b.delete_node(7)
-
-print("after deleting..", b.inorder())
-
-b.delete_node(81)
-
-print("after deleting..", b.inorder())
