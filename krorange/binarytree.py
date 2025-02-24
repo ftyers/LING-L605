@@ -40,15 +40,21 @@ class Node:
 		if value < self.value:
 			if self.left:
 				self.left = self.left.delete(value)
-				rightmost = self.left.find(value.right.child)
-				self.left = rightmost
-				return self.left
-		else:
+		elif value > self.value:
 			if self.right:
 				self.right = self.right.delete(value)
-				leftmost = self.right.find(value.left.child)
-				self.right = leftmost
+		# if value == self.value
+		else:
+			if not self.left:
 				return self.right
+			elif not self.right:
+				return self.left
+			else:
+				current = self.right
+				while current.left:
+					current = current.left
+				self.value = current.value
+				self.right = self.right.delete(self.value)
 		return self
 
 	def __str__(self):
