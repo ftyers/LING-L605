@@ -22,15 +22,17 @@ for n in n_values:
     ll_insert_times = []
     bt_insert_times = []
 
-    for i in range(num_trials):
-        value = random.randint(10000, 100000)
+    for _ in range(num_trials):
+        values = [random.randint(0, 100000) for _ in range(n)]
 
         start_time = time.time()
-        ll.append(value)
+        for value in values:
+            ll.append(value)
         ll_insert_times.append(time.time() - start_time)
 
         start_time = time.time()
-        bt.insert(value)
+        for value in values:
+            bt.insert(value)
         bt_insert_times.append(time.time() - start_time)
 
     ll_insert_times_avg.append(sum(ll_insert_times) / num_trials)
