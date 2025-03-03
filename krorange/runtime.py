@@ -23,7 +23,7 @@ for n in n_values:
     bt_insert_times = []
 
     for _ in range(num_trials):
-        values = [random.randint(0, 100000) for _ in range(n)]
+        values = [random.randint(0, 1000000) for _ in range(n)]
 
         start_time = time.time()
         for value in values:
