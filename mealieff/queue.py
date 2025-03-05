@@ -14,8 +14,10 @@ class Queue:
     def dequeue(self):
         if self.empty():
             raise Empty
+        val = self.queue[-1]
         del self.queue[-1]
-                  
+        return val 
+         
     def head(self):
         if self.empty():
             raise Exception("Queue is empty")

@@ -1,6 +1,7 @@
 # min-heap: smallest value always at the root
 
 import math
+from stack import stack
 
 class Heap:
     def __init__(self):
@@ -60,7 +61,7 @@ class Heap:
         # If the heap is empty, return True, otherwise False
         if len(self.nodes) == 0:
             return True
-    
+
     def printHeap(self, total_width=60, fill=' '):
         """Pretty-print the heap tree structure."""
         if not self.nodes:
