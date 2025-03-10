@@ -1,51 +1,36 @@
 class Stack:
-    def __init__(self, max_length):   # constructor
+    def __init__(self, max_length):   
         self.stack = []
         self.max_length = max_length
 
-    def push(self, value):   # methods
+    def push(self, value):   
         if self.full() == True:
-          return "Stack is full!"
-        else:
-          self.stack =  self.stack + [value]
+          raise Exception("Stack is full!")
+        self.stack =  self.stack + [value]
 
     def pop(self):
         if self.empty() == True:
-           return "Stack is empthy!"
-        else:
-          self.stack = self.stack[:-1]
+           raise Exception("Stack is empty!")
+        poped_item =  self.stack[-1] 
+        self.stack = self.stack[:-1]
+        return poped_item
 
     def peek(self):
-        length = len(self.stack)-1
-        return print(self.stack[length])
+        if self.empty():
+            raise Exception("Stack is empty!")
+        return self.stack[-1]
 
     def empty(self):
-        if len(self.stack) == 0:
-          return True
-        return False
+        return len(self.stack) == 0
 
     def full(self):
-        if len(self.stack) == self.max_length:
-          return True
-        return False
+        return len(self.stack) == self.max_length
 
-    def __eq__(self1, self2):
-        equal_val = True
-        for i in range(len(self1.stack)):
-            if self1.stack[i] != self2.stack[i]:
-                equal_val = False
-        return equal_val
-
-        # return self.stack == other.stack
+    def __eq__(self, other):
+        return self.stack == other.stack
 
     def __len__(self):
-        for i in self.stack:
-            if self1.stack[i] != self2.stack[i]:
-                equal_val = False
-        return equal_val
-
-
-        # return len(self.stack)
+        return len(self.stack)
 
     def __contains__(self, value):
         return value in self.stack
@@ -53,4 +38,4 @@ class Stack:
     def __str__(self):
         return str(self.stack)
 
-    #
+

@@ -9,22 +9,27 @@ class LinkedList:
 
     def prepend(self, value):
         newnode = Node(value)
+        if not self.head:
+            self.head = newnode
+            return
         newnode.next = self.head
         self.head = newnode
 
     def append(self, value):
         newnode = Node(value)
-        if self.head == None:
+        if not self.head:
             self.head = newnode
             return
-
         current = self.head
-        while current.next != None:
+        while current.next:
             current = current.next
-
         current.next = newnode
 
     def update_node(self, index, value):
+
+        if index < 0 or index >= self.length():
+            raise IndexError("Index out of bounds.")
+        
         current = self.head
         i = 1
         while i < index and current is not None:
@@ -35,11 +40,11 @@ class LinkedList:
     def delete(self, index):
             # First check the bounds, if index > length of list, raise Exception
             if index > self.length():
-                raise Exception
+                raise IndexError("Index out of bounds.")
 
             # If the length is 0, raise Exception
             if self.length() == 0:
-                raise Exception
+                raise Exception("List is empty")
     
             # Pre = node before the node to delete (index-1) 
             # Post = node after the node to delete (index+1) delete_node.next
@@ -74,13 +79,14 @@ class LinkedList:
         return length
 
     def __str__(self):
-        s = ''
-        node = self.head
-        while node.next != None:
-            s += node.data
-            node = node.next
-        s += node.data
-        return s
+        if self.head is None:
+            return "Empty List"  # ✅ Return a string instead of raising an error
+        result = []
+        current = self.head
+        while current:
+            result.append(str(current.data))
+            current = current.next
+        return " -> ".join(result)
 
 
 # mylist = LinkedList()

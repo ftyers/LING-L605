@@ -20,13 +20,14 @@ class Node:
         # print(value)
         if self.value == value:
             print(value,'is here.')
-            return
+            return self.value
         if value < self.value and self.left:
-            self.left.find(value)
+            return self.left.find(value)
         elif value > self.value and self.right:
-            self.right.find(value)
+            return self.right.find(value)
         else:
             print(value,'is not here.')
+            return None
 
     def delete(self, value):
         if value < self.value and self.left:
@@ -35,7 +36,6 @@ class Node:
             self.right = self.right.delete(value)
         elif self.value == value:
             # print(f"{value} is here.")
-
             # no branches
             if not self.left and not self.right:
                 return None
@@ -115,60 +115,41 @@ class BinarySearchTree:
             self.root = Node(value)
 
     def find(self, value):
+        return self.root.find(value) if self.root else None
+        
+    def delete(self, value):
         if self.root:
-            self.root.find(value)
-        else:
-            print('Tree is empty.')
+            self.root = self.root.delete(value)
 
     def inorder(self, node=None, a=""):
+        # ascending order
         if node:
             self.inorder(node.left, a + '\t')
             print(a + str(node.value))
             self.inorder(node.right, a + '\t')
 
-    # def inorder_traversal(self, root, result):
-    #     if root:
-    #         self.inorder_traversal(root.left, result)
-    #         result.append(str(root.value))
-    #         self.inorder_traversal(root.right, result)
-
-    # def __str__(self):
-    #     result = []
-    #     self.inorder_traversal(self.root, result)
-    #     return " -> ".join(result)  # Format as an arrow-separated string
-
-
-
-    def delete(self, value):
-        """Public delete function."""
-        if self.root:
-            self.root = self.root.delete(value)
-        else:
-            print("Tree is empty.")
-
-
-b = BinarySearchTree()
-for value in [16, 7, 49, 4, 24, 65, 1, 9, 81, 52]:
-        b.insert(value)
-
-print(b)
-
-b.find(16)
-b.find(7)
-b.find(3)
-
-print(b)
-a = ''
-b.inorder(b.root, a)
-
-b.delete(49)
-
-print(b)
-a = ''
-b.inorder(b.root, a)
-
-b.delete(7)
-
-print(b)
-a = ''
-b.inorder(b.root, a)
+# b = BinarySearchTree()
+# for value in [16, 7, 49, 4, 24, 65, 1, 9, 81, 52]:
+#         b.insert(value)
+#
+# print(b)
+#
+# b.find(16)
+# b.find(7)
+# b.find(3)
+#
+# print(b)
+# a = ''
+# b.inorder(b.root, a)
+#
+# b.delete(49)
+#
+# print(b)
+# a = ''
+# b.inorder(b.root, a)
+#
+# b.delete(7)
+#
+# print(b)
+# a = ''
+# b.inorder(b.root, a)
