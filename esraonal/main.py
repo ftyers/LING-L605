@@ -1,7 +1,7 @@
 import time
 import random
-import numpy as np
-import matplotlib.pyplot as plt
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
 from linkedlist import LinkedList
 from binarysearchtree import BinarySearchTree
 
