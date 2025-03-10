@@ -5,7 +5,7 @@ class Heap:
         self.nodes = []
 
     def insert(self, value):
-        print(f'Inserting {value}')
+        # print(f'Inserting {value}')
         self.nodes.append(value)
         self._up(len(self.nodes)-1)
 
@@ -93,17 +93,17 @@ class Heap:
         return len(self.nodes) == 0
 
 
-heap_example = Heap()
-for value in [4, 17, 8, 13, 54, 33, 10, 7, 99, 25]:
-    heap_example.insert(value)
-    # print(heap_example)
+# heap_example = Heap()
+# for value in [4, 17, 8, 13, 54, 33, 10, 7, 99, 25]:
+#     heap_example.insert(value)
+#     # print(heap_example)
 
-heap_example.print_tree()
+# heap_example.print_tree()
 
-a = heap_example.poll()
+# a = heap_example.poll()
 
-print(a)
-print(heap_example.nodes)
+# print(a)
+# print(heap_example.nodes)
 
-heap_example.print_tree()
+# heap_example.print_tree()
 
