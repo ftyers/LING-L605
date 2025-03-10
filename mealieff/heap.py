@@ -1,7 +1,6 @@
 # min-heap: smallest value always at the root
 
 import math
-from stack import stack
 
 class Heap:
     def __init__(self):
@@ -30,15 +29,15 @@ class Heap:
     def delete(self):
         if len(self.nodes) == 0:
             return
-
+        root = self.nodes[0]
+        self.nodes[0] = self.nodes[len(self.nodes) - 1]
         # Delete root node
-        self.nodes[0], self.nodes[-1] = self.nodes[-1], self.nodes[0] 
-        min_value = self.nodes.pop()
-        self._down(0)
-        return min_value
+        del self.nodes[-1]
+        self._down()
+        return root
 
 
-    def _down(self, parent):
+    def _down(self, parent=0):
         left = 2 * parent + 1
         right = 2 * parent + 2
 
