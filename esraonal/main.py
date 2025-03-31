@@ -4,6 +4,7 @@ import numpy as np # type: ignore
 import matplotlib.pyplot as plt # type: ignore
 from linkedlist import LinkedList
 from binarysearchtree import BinarySearchTree
+from heap import Heap
 
 def compare_insertion():
     random.seed(42)
@@ -12,6 +13,7 @@ def compare_insertion():
 
     binarytree = BinarySearchTree()
     linkedlist = LinkedList()
+    heap = Heap()
 
     # track insert for binarytree
     track_time_tree = [0]
@@ -37,19 +39,31 @@ def compare_insertion():
         current = time.time()
         track_time_list_prepend.append(current - initial_list_prepend)
 
+    # track insert for heap
+    track_time_heap_insertion = [0]
+    initial_heap_insertion= time.time()
+    for value in data:
+        heap.insert(value)
+        current = time.time()
+        track_time_heap_insertion.append(current - initial_heap_insertion)
+
     # Plotting
     plt.figure(figsize=(10, 6))
 
     plt.plot(track_time_tree, label="Binary Search Tree", color='b', linewidth=1.5)
     plt.plot(track_time_list_append, label="Linked List (Append)", color='r', linewidth=1.5)
     plt.plot(track_time_list_prepend, label="Linked List (Prepend)", color='g', linewidth=1.5)
+    plt.plot(track_time_heap_insertion, label="Heap", color='y', linewidth=1.5)
 
     # Adjusting the x-axis for intervals of 500 bins
     plt.xticks(range(0, num_values, 500), rotation=45)
 
+    # Use logarithmic scale for y-axis to enhance visibility of small values
+    plt.yscale('log')
+
     plt.xlabel('Insertions')
     plt.ylabel('Time (seconds)')
-    plt.title('Comparison of Time for Insertions: Binary Tree vs Linked List')
+    plt.title('Comparison of Time for Insertions: Binary Tree vs Linked List vs Heap')
     plt.legend()
     plt.grid(True)
 
@@ -102,4 +116,4 @@ def compare_deletion():
 
 if __name__ == '__main__':
     compare_insertion()
-    compare_deletion()
+    # compare_deletion()
